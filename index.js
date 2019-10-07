@@ -185,6 +185,7 @@ function sendZalandoResponseMessage(recipientId, propertyArray) {
         type: "template",
         payload: {
           template_type: "generic",
+          image_aspect_ratio: "square",
           elements: [{
             title: propertyArray[0].name + " by " + propertyArray[0].brand_name,
             subtitle: propertyArray[0].price,
