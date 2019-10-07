@@ -42,6 +42,7 @@ app.post('/webhook', function (request, response) {
         if (messagingEvent.optin) {
           // receivedAuthentication(messagingEvent);
         } else if (messagingEvent.message) {
+          console.log("message received...")
           receivedMessage(messagingEvent);
         } else if (messagingEvent.delivery) {
           // receivedDeliveryConfirmation(messagingEvent);
@@ -62,7 +63,7 @@ app.post('/webhook', function (request, response) {
 });
 
 //var PAGE_ACCESS_TOKEN = "EAAEHFebMi9sBAAdNZAMrgsmKVrGm2rVu7oPzlkr2cb2McHYz0ccENdcFquaVtNKghYG1tWZBR8LZCJCzmTzu9tyGaZCZCj58iyg9vncvZBEQzsfPgZCzk2YsCjv002d3NeXaRZBKoIS30wnB5EuqxZBeNpk4oI4wiMtE2T9fZCFUblZBQZDZD";
-var PAGE_ACCESS_TOKEN = "EAAikXHKbMcEBAI9e8cFSo26vIrzBqmmkZBpQRjmqMHvU8wAn0rEoAo4qWuCvETEWQczw4cZBSowtKILxdKmxTflt3ZAFsf7KM28xWThzet1DTjoZBrPEZC1LybaZBZChE8JtTSpnUKME6la9WtOcBTjZAdZCsR2FkOYw8D7FjrNlRCEpqlDOMKb2t0BZCOM1FUAn0ZD";
+var PAGE_ACCESS_TOKEN = "EAAikXHKbMcEBAGKNzrsBGpeXZCHAvpn2ApBu8YBxpk1XvQMp0kNUYuZBtCocUScO3JaOazpIP3r08qWZChdEkVOs8sHXn5CIyZAM9DHkyqdRhy7QlF3KrgoPgctMZC2f6c7ZAJAMjlHTRVqeF6DBj6KZAG5hpmhF1lZA9kqQnMiZAsAZDZD";
 
 function User(){
 }
@@ -74,41 +75,22 @@ function receivedMessage(event) {
   var timeOfMessage = event.timestamp;
   var message = event.message;
 
-  // console.log("Received message for user %d and page %d at %d", 
-  // senderID, recipientID, timeOfMessage);
-  // sendTypingAction(senderID, "mark_seen");
+  console.log("Received message for user %d and page %d at %d", 
+  senderID, recipientID, timeOfMessage);
+  sendTypingAction(senderID, "mark_seen");
   sendTypingAction(senderID, "typing_on");
 
-  // if (Object.keys(userMap).length > 100) {
-  //   userMap.splice(-1,1);
-  // }
-
-  // if (!userMap.hasOwnProperty(senderID)) {
-  //   console.log('Adding new user to session: ' + senderID);
-  //   userMap[senderID] = new User();
-  //   // sendGenericMessage(senderID);
-  //   //this.setTimeout(function() { echoMessage(senderID, "Please type the location you are looking for rent/buy property: flats in powai mumbai"); }, 2000);
-
-  // } else {
-  //   console.log('User already in session: ' + userMap[senderID]);
-  // }
-
-  /*
-  Add user to redis cache:
-  console.log('Adding new user to redis: ' + senderID);
-  client.hmset(senderID, JSON.stringify(new User()));
-  */
   var messageId = message.mid;
   var messageText = message.text;
   var messageAttachments = message.attachments;
 
   if (messageText) {
 
-    /*if (messageText.toLowerCase().indexOf("hi") > -1 || messageText.toLowerCase().indexOf("hello") > -1
-        || messageText.toLowerCase().indexOf("hey") > -1) {
-      sendGenericMessage(senderID);
-      return;
-    }*/
+    // if (messageText.toLowerCase().indexOf("hi") > -1 || messageText.toLowerCase().indexOf("hello") > -1
+    //     || messageText.toLowerCase().indexOf("hey") > -1) {
+    //   sendGenericMessage(senderID);
+    //   return;
+    // }
 
     if (messageText.toLowerCase().indexOf("complain") > -1 || messageText.toLowerCase().indexOf("refund") > -1
           || messageText.toLowerCase().indexOf("pathetic") > -1 || messageText.toLowerCase().indexOf("frod") > -1) {
@@ -125,7 +107,7 @@ function receivedMessage(event) {
     return;
 
   } else if (messageAttachments) {
-    // echoMessage(senderID, "");
+    echoMessage(senderID, "Message with attachments received");
   }
 }
 
