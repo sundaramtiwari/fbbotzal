@@ -121,16 +121,18 @@ function receivedMessage(event) {
       return;
     }
 
-    if (messageText.toLowerCase().indexOf("thnk") > -1 {
+    if (messageText.toLowerCase().indexOf("thnk") > -1 ) {
       // userMap[senderID] = new User();
       // client.hmset(senderID, JSON.stringify(new User()));
       console.log('reset called');
       delete userMap[senderID];
       echoMessage(senderID, "Session reset for userId: " + senderID);
       return;
-    } 
-    callZalando(messageText, senderID);
-    return;
+
+    } else {
+      callZalando(messageText, senderID);
+      return;
+    }
 
   } else if (messageAttachments) {
     // echoMessage(senderID, "");
