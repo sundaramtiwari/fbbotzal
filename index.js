@@ -149,12 +149,7 @@ function callZalando(messageText, senderID) {
                   prop.image = "https://mosaic03.ztat.net/vgs/media/catalog-lg/" + articles[i].media[0].path;
                   prop.name = articles[i].name.split(" ", 1);
                   prop.brand_name = articles[i].brand_name;
-                  if (articles[i].price.promotional != articles[i].price.original) {
-                    prop.price =  articles[i].price.promotional + ' was ' + articles[i].price.original.strike();
-
-                  } else {
-                    prop.price = articles[i].price.promotional;
-                  }
+                  prop.price = articles[i].price.promotional;
                   prop.shortUrl = 'https://en.zalando.de/' + articles[i].url_key + '.html';
                   prop.product_group = articles[i].product_group;
                   count++;
