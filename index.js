@@ -132,13 +132,6 @@ function callZalando(messageText, senderID) {
           var jsonResponse = JSON.parse(body);
           var articles = jsonResponse.articles;
           console.log('zalando articles received');
-          
-          var user = userMap[senderID];
-            /* client.hgetall(senderID, function(err, object) {
-              user = JSON.parse(object) ;
-            }); */
-
-          user.containsGreeting = 'false';
 
           if (!articles || typeof articles === 'undefined') {
             //this.setTimeout(function() { echoMessage(senderID, "Thanks for contacting. One of our executives will get in touch with you shortly..."); }, 4000);
