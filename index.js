@@ -116,22 +116,152 @@ function receivedMessage(event) {
       return;
     }
 
-    if (messageText.toLowerCase().indexOf("plan") > -1) {
-      sendPlansMessage(senderID);
-      return;
-    }
-
     if (messageText.toLowerCase().indexOf("thnk") > -1 || messageText.toLowerCase().indexOf("thank") > -1 && messageText.length < 20) {
       echoMessage(senderID, "Happy to help!");
       return;
     }
 
-    makeWitCall(messageText, senderID);
+    callZalando(messageText, senderID);
     return;
 
   } else if (messageAttachments) {
     // echoMessage(senderID, "");
   }
+}
+
+function callZalando(messageText, senderID) {
+    if (senderID === '794951570520699')
+      return;
+    queryString = encodeURIComponent(messageText);
+    witUrl = 'https://en.zalando.de/api/catalog/articles?sort=popularity&query=' + queryString;
+    console.log('senderID: ' + senderID);
+    console.log('Zalando URL: ' + witUrl);
+
+    var options = {
+      uri: witUrl,
+      method: 'GET'
+    }
+
+    request(options, function(error, response, body) {
+      if(error) {
+        echoMessage(senderID, "Oops! received error from zalando" + error);
+      }
+      else {
+          var jsonResponse = JSON.parse(body);
+          var articles = jsonResponse.articles;
+          console.log('zalando articles received');
+          
+          var user = userMap[senderID];
+            /* client.hgetall(senderID, function(err, object) {
+              user = JSON.parse(object) ;
+            }); */
+
+          user.containsGreeting = 'false';
+
+          if (!articles || typeof articles === 'undefined') {
+            //this.setTimeout(function() { echoMessage(senderID, "Thanks for contacting. One of our executives will get in touch with you shortly..."); }, 4000);
+            console.log('No articles found');
+            echoMessage(senderID, "Thanks for contacting. One of our executives will get in touch with you shortly...");
+            return;
+
+          } else if(articles.length > 3){
+            var propertyArray = [];
+
+            for (var i=0; count < 4; i++) {
+              if (i > 100) {
+                break;
+              }
+              if (articles[i]) {
+                  var prop = new Property();
+                  prop.image = "https://mosaic03.ztat.net/vgs/media/catalog-lg/" + articles[i].media[0].path;
+                  prop.name = articles[i].name.split('_').[0];
+                  prop.brand_name = articles[i].brand_name;
+                  prop.price = articles[i].price.promotional;
+                  prop.shortUrl = 'https://en.zalando.de/' + articles[i].url_key;
+                  count++;
+                  propertyArray.push(prop);
+              }
+            }
+              // userMap[senderID] = new User();
+              // client.hmset(senderID, JSON.stringify(new User()));
+              sendZalandoResponseMessage(senderID, propertyArray);
+              console.log('Response called');
+          } else if(articles.hasOwnProperty('greeting')) {
+              console.log('greeting called');
+              sendGenericMessage(senderID);
+              user.containsGreeting = 'true';
+              console.log('processing wit response..');
+              processWitRespone(senderID, articles, user);
+              // this.setTimeout(function() { echoMessage(senderID, 'Please type the location you are looking for rent/buy property: flats in powai mumbai');}, 2000);
+          } else {
+              console.log('processing wit response..');
+          }
+      }
+      return;
+    });
+}
+
+function sendZalandoResponseMessage(recipientId, propertyArray) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "generic",
+          elements: [{
+            title: propertyArray[0].name + " by " + propertyArray[0].brand_name,
+            subtitle: propertyArray[0].price,
+            item_url: propertyArray[0].shortUrl,
+            image_url: propertyArray[0].image,
+            buttons: [{
+              type: "web_url",
+              url: propertyArray[0].shortUrl,
+              title: "View Product"
+            }]
+          },
+          {
+            title: propertyArray[1].name + " by " + propertyArray[1].brand_name,
+            subtitle: propertyArray[1].price,
+            item_url: propertyArray[1].shortUrl,
+            image_url: propertyArray[1].image,
+            buttons: [{
+              type: "web_url",
+              url: propertyArray[1].shortUrl,
+              title: "View Product"
+            }]
+          },
+          {
+            title: propertyArray[2].name + " by " + propertyArray[2].brand_name,
+            subtitle: propertyArray[2].price,
+            item_url: propertyArray[2].shortUrl,
+            image_url: propertyArray[2].image,
+            buttons: [{
+              type: "web_url",
+              url: propertyArray[2].shortUrl,
+              title: "View Product"
+            }]
+          },
+          {
+            title: propertyArray[3].name + " by " + propertyArray[3].brand_name,
+            subtitle: propertyArray[3].price,
+            item_url: propertyArray[3].shortUrl,
+            image_url: propertyArray[3].image,
+            buttons: [{
+              type: "web_url",
+              url: propertyArray[3].shortUrl,
+              title: "View Product"
+            }]
+          }]
+        }
+      }
+    }
+  };  
+
+  sendTypingAction(recipientId, "typing_off");
+  callSendAPI(messageData);
 }
 
 function makeWitCall(messageText, senderID) {
