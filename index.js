@@ -121,7 +121,7 @@ function receivedMessage(event) {
       return;
     }
 
-    if (messageText.toLowerCase().indexOf("thnk") > -1
+    if (messageText.toLowerCase().indexOf("thnk") > -1 {
       // userMap[senderID] = new User();
       // client.hmset(senderID, JSON.stringify(new User()));
       console.log('reset called');
