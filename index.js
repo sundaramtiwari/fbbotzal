@@ -1,6 +1,3 @@
-// var redis = require('redis');
-// var client = redis.createClient(port, host);
-
 var request = require('request');
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -64,7 +61,8 @@ app.post('/webhook', function (request, response) {
   }
 });
 
-var PAGE_ACCESS_TOKEN = "EAAEHFebMi9sBAAdNZAMrgsmKVrGm2rVu7oPzlkr2cb2McHYz0ccENdcFquaVtNKghYG1tWZBR8LZCJCzmTzu9tyGaZCZCj58iyg9vncvZBEQzsfPgZCzk2YsCjv002d3NeXaRZBKoIS30wnB5EuqxZBeNpk4oI4wiMtE2T9fZCFUblZBQZDZD";
+//var PAGE_ACCESS_TOKEN = "EAAEHFebMi9sBAAdNZAMrgsmKVrGm2rVu7oPzlkr2cb2McHYz0ccENdcFquaVtNKghYG1tWZBR8LZCJCzmTzu9tyGaZCZCj58iyg9vncvZBEQzsfPgZCzk2YsCjv002d3NeXaRZBKoIS30wnB5EuqxZBeNpk4oI4wiMtE2T9fZCFUblZBQZDZD";
+var PAGE_ACCESS_TOKEN = "EAAikXHKbMcEBAI9e8cFSo26vIrzBqmmkZBpQRjmqMHvU8wAn0rEoAo4qWuCvETEWQczw4cZBSowtKILxdKmxTflt3ZAFsf7KM28xWThzet1DTjoZBrPEZC1LybaZBZChE8JtTSpnUKME6la9WtOcBTjZAdZCsR2FkOYw8D7FjrNlRCEpqlDOMKb2t0BZCOM1FUAn0ZD";
 
 function User(){
 }
