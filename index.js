@@ -166,6 +166,7 @@ function callZalando(messageText, senderID) {
 
           } else if(articles.length > 3){
             var propertyArray = [];
+            var count = 0;
 
             for (var i=0; count < 4; i++) {
               if (i > 100) {
