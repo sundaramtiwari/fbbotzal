@@ -189,7 +189,7 @@ function sendZalandoResponseMessage(recipientId, propertyArray) {
           elements: [{
             title: propertyArray[0].name + " by " + propertyArray[0].brand_name,
             subtitle: propertyArray[0].price,
-            item_url: propertyArray[0].shortUrl,
+            //item_url: propertyArray[0].shortUrl,
             image_url: propertyArray[0].image,
             buttons: [{
               type: "web_url",
@@ -200,7 +200,7 @@ function sendZalandoResponseMessage(recipientId, propertyArray) {
           {
             title: propertyArray[1].name + " by " + propertyArray[1].brand_name,
             subtitle: propertyArray[1].price,
-            item_url: propertyArray[1].shortUrl,
+            //item_url: propertyArray[1].shortUrl,
             image_url: propertyArray[1].image,
             buttons: [{
               type: "web_url",
@@ -211,7 +211,7 @@ function sendZalandoResponseMessage(recipientId, propertyArray) {
           {
             title: propertyArray[2].name + " by " + propertyArray[2].brand_name,
             subtitle: propertyArray[2].price,
-            item_url: propertyArray[2].shortUrl,
+            //item_url: propertyArray[2].shortUrl,
             image_url: propertyArray[2].image,
             buttons: [{
               type: "web_url",
@@ -222,7 +222,7 @@ function sendZalandoResponseMessage(recipientId, propertyArray) {
           {
             title: propertyArray[3].name + " by " + propertyArray[3].brand_name,
             subtitle: propertyArray[3].price,
-            item_url: propertyArray[3].shortUrl,
+            //item_url: propertyArray[3].shortUrl,
             image_url: propertyArray[3].image,
             buttons: [{
               type: "web_url",
@@ -233,7 +233,7 @@ function sendZalandoResponseMessage(recipientId, propertyArray) {
           {
             title: propertyArray[4].name + " by " + propertyArray[4].brand_name,
             subtitle: propertyArray[4].price,
-            item_url: propertyArray[4].shortUrl,
+            //item_url: propertyArray[4].shortUrl,
             image_url: propertyArray[4].image,
             buttons: [{
               type: "web_url",
@@ -244,7 +244,7 @@ function sendZalandoResponseMessage(recipientId, propertyArray) {
           {
             title: propertyArray[5].name + " by " + propertyArray[5].brand_name,
             subtitle: propertyArray[5].price,
-            item_url: propertyArray[5].shortUrl,
+            //item_url: propertyArray[5].shortUrl,
             image_url: propertyArray[5].image,
             buttons: [{
               type: "web_url",
