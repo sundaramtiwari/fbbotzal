@@ -177,8 +177,14 @@ function callZalando(messageText, senderID) {
                   prop.image = "https://mosaic03.ztat.net/vgs/media/catalog-lg/" + articles[i].media[0].path;
                   prop.name = articles[i].name.split(" ", 1);
                   prop.brand_name = articles[i].brand_name;
-                  prop.price = articles[i].price.promotional;
-                  prop.shortUrl = 'https://en.zalando.de/' + articles[i].url_key;
+                  if (articles[i].price.promotional != articles[i].price.original) {
+                    prop.price =  articles[i].price.promotional + ' was ' + articles[i].price.original.strike();
+
+                  } else {
+                    prop.price = articles[i].price.promotional;
+                  }
+                  prop.shortUrl = 'https://en.zalando.de/' + articles[i].url_key + '.html';
+                  prop.product_group = articles[i].product_group;
                   count++;
                   propertyArray.push(prop);
               }
@@ -215,45 +221,45 @@ function sendZalandoResponseMessage(recipientId, propertyArray) {
           elements: [{
             title: propertyArray[0].name + " by " + propertyArray[0].brand_name,
             subtitle: propertyArray[0].price,
-            item_url: propertyArray[0].shortUrl,
+            item_url: propertyArray[0].product_group,
             image_url: propertyArray[0].image,
             buttons: [{
               type: "web_url",
               url: propertyArray[0].shortUrl,
-              title: "View Product"
+              title: "Buy Now"
             }]
           },
           {
             title: propertyArray[1].name + " by " + propertyArray[1].brand_name,
             subtitle: propertyArray[1].price,
-            item_url: propertyArray[1].shortUrl,
+            item_url: propertyArray[1].product_group,
             image_url: propertyArray[1].image,
             buttons: [{
               type: "web_url",
               url: propertyArray[1].shortUrl,
-              title: "View Product"
+              title: "Buy Now"
             }]
           },
           {
             title: propertyArray[2].name + " by " + propertyArray[2].brand_name,
             subtitle: propertyArray[2].price,
-            item_url: propertyArray[2].shortUrl,
+            item_url: propertyArray[2].product_group,
             image_url: propertyArray[2].image,
             buttons: [{
               type: "web_url",
-              url: propertyArray[2].shortUrl,
-              title: "View Product"
+              url: propertyArray[2].product_group,
+              title: "Buy Now"
             }]
           },
           {
             title: propertyArray[3].name + " by " + propertyArray[3].brand_name,
             subtitle: propertyArray[3].price,
-            item_url: propertyArray[3].shortUrl,
+            item_url: propertyArray[3].product_group,
             image_url: propertyArray[3].image,
             buttons: [{
               type: "web_url",
               url: propertyArray[3].shortUrl,
-              title: "View Product"
+              title: "Buy Now"
             }]
           }]
         }
