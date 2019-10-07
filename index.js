@@ -139,14 +139,11 @@ function callZalando(messageText, senderID) {
             echoMessage(senderID, "Thanks for contacting. One of our executives will get in touch with you shortly...");
             return;
 
-          } else if(articles.length > 3){
+          } else if(articles.length > 5){
             var propertyArray = [];
             var count = 0;
 
             for (var i=0; count < 6; i++) {
-              if (i > 100) {
-                break;
-              }
               if (articles[i]) {
                   var prop = new Property();
                   prop.image = "https://mosaic03.ztat.net/vgs/media/catalog-lg/" + articles[i].media[0].path;
@@ -246,7 +243,8 @@ function sendZalandoResponseMessage(recipientId, propertyArray) {
               type: "web_url",
               url: propertyArray[4].shortUrl,
               title: "Buy Now"
-            },
+            }],
+          },
           {
             title: propertyArray[5].name + " by " + propertyArray[5].brand_name,
             subtitle: propertyArray[5].price,
@@ -257,7 +255,6 @@ function sendZalandoResponseMessage(recipientId, propertyArray) {
               url: propertyArray[5].shortUrl,
               title: "Buy Now"
             }]
-          }]
           }]
         }
       }
