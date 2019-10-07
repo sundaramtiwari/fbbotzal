@@ -79,19 +79,19 @@ function receivedMessage(event) {
   // sendTypingAction(senderID, "mark_seen");
   sendTypingAction(senderID, "typing_on");
 
-  if (Object.keys(userMap).length > 100) {
-    userMap.splice(-1,1);
-  }
+  // if (Object.keys(userMap).length > 100) {
+  //   userMap.splice(-1,1);
+  // }
 
-  if (!userMap.hasOwnProperty(senderID)) {
-    console.log('Adding new user to session: ' + senderID);
-    userMap[senderID] = new User();
-    // sendGenericMessage(senderID);
-    //this.setTimeout(function() { echoMessage(senderID, "Please type the location you are looking for rent/buy property: flats in powai mumbai"); }, 2000);
+  // if (!userMap.hasOwnProperty(senderID)) {
+  //   console.log('Adding new user to session: ' + senderID);
+  //   userMap[senderID] = new User();
+  //   // sendGenericMessage(senderID);
+  //   //this.setTimeout(function() { echoMessage(senderID, "Please type the location you are looking for rent/buy property: flats in powai mumbai"); }, 2000);
 
-  } else {
-    console.log('User already in session: ' + userMap[senderID]);
-  }
+  // } else {
+  //   console.log('User already in session: ' + userMap[senderID]);
+  // }
 
   /*
   Add user to redis cache:
@@ -121,18 +121,8 @@ function receivedMessage(event) {
       return;
     }
 
-    if (messageText.toLowerCase().indexOf("thnk") > -1 ) {
-      // userMap[senderID] = new User();
-      // client.hmset(senderID, JSON.stringify(new User()));
-      console.log('reset called');
-      delete userMap[senderID];
-      echoMessage(senderID, "Session reset for userId: " + senderID);
-      return;
-
-    } else {
-      callZalando(messageText, senderID);
-      return;
-    }
+    callZalando(messageText, senderID);
+    return;
 
   } else if (messageAttachments) {
     // echoMessage(senderID, "");
