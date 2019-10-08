@@ -208,13 +208,13 @@ function processWitRespone(senderID, results, user) {
     }
   }
 
-  if (typeof user.color  !== 'undefined')
+  if (typeof user.color  !== 'undefined' && user.color !== 'undefined')
     user.queryString += user.color
 
-  if (typeof user.category  !== 'undefined')
+  if (typeof user.category  !== 'undefined' && user.category !== 'undefined')
     user.queryString += user.category
 
-  if (typeof user.filters  !== 'undefined')
+  if (typeof user.filters  !== 'undefined' && user.filters !== 'undefined')
     user.queryString += user.filters
 
   console.log("QueryString: " + user.queryString)
