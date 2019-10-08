@@ -185,8 +185,6 @@ function processWitRespone(senderID, results, user) {
   map['category'] = 0;
   map['filters'] = 0;
 
-  var queryString = "";
-
   if(results.hasOwnProperty('color') && typeof results.color  !== 'undefined') {
     user.color = results.color[0].value;
   }
@@ -208,7 +206,8 @@ function processWitRespone(senderID, results, user) {
     }
   }
 
-  user.queryString = '';
+  if (typeof user.queryString === 'undefined' || user.queryString === 'undefined')
+    user.queryString = '';
 
   if (typeof user.color  !== 'undefined' && user.color !== 'undefined')
     user.queryString += ' ' + user.color
