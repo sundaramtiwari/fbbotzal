@@ -39,7 +39,7 @@ app.post('/webhook', function (request, response) {
 
       // Iterate over each messaging event
 
-      if (typeof pageEntry.messaging === 'undefined') {
+      if (typeof pageEntry.messaging !== 'undefined') {
         pageEntry.messaging.forEach(function(messagingEvent) {
           if (messagingEvent.optin) {
             // receivedAuthentication(messagingEvent);
