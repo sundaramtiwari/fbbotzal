@@ -389,7 +389,7 @@ function sendGenericMessage(recipientId) {
                       type: "template",
                       payload: {
                         template_type: "button",
-                        text: 'Hello ' + fbResponse.first_name + '.\nI am AI-assistant for Zalando.\n Type in whatever you want to buy for clothing or fashion and I\'ll try my best!'
+                        text: 'Hello ' + fbResponse.first_name + '.\nI am AI-assistant for Zalando.\n Type in whatever you want to buy for clothing or fashion and I\'ll try my best!',
                         buttons: [{
                             "type": "web_url",
                             "url": "https://en.zalando.de/",
