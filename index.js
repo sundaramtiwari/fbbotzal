@@ -208,12 +208,11 @@ function processWitRespone(senderID, results, user) {
     }
   }
 
-  console.log("QueryString: " + queryString)
   user.queryString = user.color + ' ' + user.category + ' ' + user.filters;
-
+  console.log("QueryString: " + user.queryString)
   userMap[senderID] = user;
 
-  callZalando(queryString, senderID);
+  callZalando(user.queryString, senderID);
 }
 
 function callZalando(messageText, senderID) {
