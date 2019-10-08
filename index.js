@@ -191,7 +191,7 @@ function processWitRespone(senderID, results, user) {
 
 
   if(results.hasOwnProperty('filters')) {
-    for (int i=0; i < results.filters.length; i++) {
+    for (var i=0; i < results.filters.length; i++) {
       user.filters = user.filters + ' ' + results.filters[i].value;
       queryString = queryString + " " + user.filters;
     }
