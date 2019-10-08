@@ -208,7 +208,15 @@ function processWitRespone(senderID, results, user) {
     }
   }
 
-  user.queryString = user.color + ' ' + user.category + ' ' + user.filters;
+  if (typeof user.color  !== 'undefined')
+    user.queryString += user.color
+
+  if (typeof user.category  !== 'undefined')
+    user.queryString += user.category
+
+  if (typeof user.filters  !== 'undefined')
+    user.queryString += user.filters
+
   console.log("QueryString: " + user.queryString)
   userMap[senderID] = user;
 
