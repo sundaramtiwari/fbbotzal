@@ -177,7 +177,7 @@ function processWitRespone(senderID, results, user) {
   map['category'] = 0;
   map['filters'] = 0;
 
-  String queryString = "";
+  var queryString = "";
 
   if(results.hasOwnProperty('color')) {
     user.color = results.color[0].value;
