@@ -102,17 +102,6 @@ function receivedMessage(event) {
 
   if (messageText) {
 
-    if (messageText.toLowerCase().indexOf("hi") > -1 || messageText.toLowerCase().indexOf("hello") > -1
-        || messageText.toLowerCase().indexOf("hey") > -1) {
-      sendGenericMessage(senderID);
-      return;
-    }
-
-    if (messageText.toLowerCase().indexOf("thnk") > -1 || messageText.toLowerCase().indexOf("thank") > -1 && messageText.length < 20) {
-      echoMessage(senderID, "Happy to help!");
-      return;
-    }
-
     makeWitCall(messageText, senderID);
     // callZalando(messageText, senderID);
     return;
@@ -180,10 +169,6 @@ function makeWitCall(messageText, senderID) {
 }
 
 function processWitRespone(senderID, results, user) {
-  var map = {};
-  map['color'] = 0;
-  map['category'] = 0;
-  map['filters'] = 0;
 
   if(results.hasOwnProperty('color') && typeof results.color  !== 'undefined') {
     user.color = results.color[0].value;
@@ -221,7 +206,7 @@ function processWitRespone(senderID, results, user) {
   console.log("QueryString: " + user.queryString)
   userMap[senderID] = user;
 
-  callZalando(user.queryString, senderID);
+  callZalando(user.queryString.trim(), senderID);
 }
 
 function callZalando(messageText, senderID) {
