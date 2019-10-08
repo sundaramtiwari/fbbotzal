@@ -204,7 +204,7 @@ function processWitRespone(senderID, results, user) {
   callZalando(queryString, senderID);
 }
 
-function callZalando(queryString, senderID) {
+function callZalando(messageText, senderID) {
     if (senderID === '794951570520699')
       return;
     queryString = encodeURIComponent(messageText);
@@ -389,21 +389,12 @@ function sendGenericMessage(recipientId) {
                       type: "template",
                       payload: {
                         template_type: "button",
-                        text: 'Hello ' + fbResponse.first_name + '.\nI am NoBroker AI-assistant to help you save brokerage.\nPlease type the location you are looking to rent/buy property.',
+                        text: 'Hello ' + fbResponse.first_name + '.\nI am AI-assistant for Zalando.\n Type in whatever you want to buy for clothing or fashion and I\'ll try my best!'
                         buttons: [{
                             "type": "web_url",
-                            "url": "http://www.nobroker.in/tenant/plans",
-                            "title": "Take me to Nobroker"
-                            }, {
-                            "type": "postback",
-                            "title": "Nobroker Home Plans",
-                            "payload": "plan"
-                          }, {
-                            "type": "web_url",
-                            "title": "Post your property",
-                            "url": "http://www.nobroker.in/list-your-property-for-rent-sale"
-                          }
-                        ]
+                            "url": "https://en.zalando.de/",
+                            "title": "Goto Zalando!"
+                            }]
                     }
                   }
                 }
