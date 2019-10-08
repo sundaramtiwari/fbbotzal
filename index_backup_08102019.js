@@ -61,7 +61,7 @@ app.post('/webhook', function (request, response) {
   }
 });
 
-var PAGE_ACCESS_TOKEN = "EAAEHFebMi9sBAAdNZAMrgsmKVrGm2rVu7oPzlkr2cb2McHYz0ccENdcFquaVtNKghYG1tWZBR8LZCJCzmTzu9tyGaZCZCj58iyg9vncvZBEQzsfPgZCzk2YsCjv002d3NeXaRZBKoIS30wnB5EuqxZBeNpk4oI4wiMtE2T9fZCFUblZBQZDZD";
+var PAGE_ACCESS_TOKEN = "EAAikXHKbMcEBABFDhRdVTVHrxsX3oHbjZANfE2zwwlJem71wT9RZAGnsfNw6Dti5QAOCKaU8AMjMZBog2J7l7xqaGtZCThrzpdaMVag4fOaXrrLshDDvSYbcHoRIX4LHOENQeQjEv9vg1EAujIbbtT8ffvmrMcobq2z71UuCMAZDZD";
 
 function User(){
 }

@@ -42,6 +42,7 @@ app.post('/webhook', function (request, response) {
         if (messagingEvent.optin) {
           // receivedAuthentication(messagingEvent);
         } else if (messagingEvent.message) {
+          console.log("message received...")
           receivedMessage(messagingEvent);
         } else if (messagingEvent.delivery) {
           // receivedDeliveryConfirmation(messagingEvent);
@@ -62,7 +63,7 @@ app.post('/webhook', function (request, response) {
 });
 
 //var PAGE_ACCESS_TOKEN = "EAAEHFebMi9sBAAdNZAMrgsmKVrGm2rVu7oPzlkr2cb2McHYz0ccENdcFquaVtNKghYG1tWZBR8LZCJCzmTzu9tyGaZCZCj58iyg9vncvZBEQzsfPgZCzk2YsCjv002d3NeXaRZBKoIS30wnB5EuqxZBeNpk4oI4wiMtE2T9fZCFUblZBQZDZD";
-var PAGE_ACCESS_TOKEN = "EAAikXHKbMcEBAI9e8cFSo26vIrzBqmmkZBpQRjmqMHvU8wAn0rEoAo4qWuCvETEWQczw4cZBSowtKILxdKmxTflt3ZAFsf7KM28xWThzet1DTjoZBrPEZC1LybaZBZChE8JtTSpnUKME6la9WtOcBTjZAdZCsR2FkOYw8D7FjrNlRCEpqlDOMKb2t0BZCOM1FUAn0ZD";
+var PAGE_ACCESS_TOKEN = "EAAikXHKbMcEBABFDhRdVTVHrxsX3oHbjZANfE2zwwlJem71wT9RZAGnsfNw6Dti5QAOCKaU8AMjMZBog2J7l7xqaGtZCThrzpdaMVag4fOaXrrLshDDvSYbcHoRIX4LHOENQeQjEv9vg1EAujIbbtT8ffvmrMcobq2z71UuCMAZDZD";
 
 function User(){
 }
@@ -79,36 +80,17 @@ function receivedMessage(event) {
   sendTypingAction(senderID, "mark_seen");
   sendTypingAction(senderID, "typing_on");
 
-  if (Object.keys(userMap).length > 100) {
-    userMap.splice(-1,1);
-  }
-
-  if (!userMap.hasOwnProperty(senderID)) {
-    console.log('Adding new user to session: ' + senderID);
-    userMap[senderID] = new User();
-    // sendGenericMessage(senderID);
-    //this.setTimeout(function() { echoMessage(senderID, "Please type the location you are looking for rent/buy property: flats in powai mumbai"); }, 2000);
-
-  } else {
-    console.log('User already in session: ' + userMap[senderID]);
-  }
-
-  /*
-  Add user to redis cache:
-  console.log('Adding new user to redis: ' + senderID);
-  client.hmset(senderID, JSON.stringify(new User()));
-  */
   var messageId = message.mid;
   var messageText = message.text;
   var messageAttachments = message.attachments;
 
   if (messageText) {
 
-    /*if (messageText.toLowerCase().indexOf("hi") > -1 || messageText.toLowerCase().indexOf("hello") > -1
-        || messageText.toLowerCase().indexOf("hey") > -1) {
-      sendGenericMessage(senderID);
-      return;
-    }*/
+    // if (messageText.toLowerCase().indexOf("hi") > -1 || messageText.toLowerCase().indexOf("hello") > -1
+    //     || messageText.toLowerCase().indexOf("hey") > -1) {
+    //   sendGenericMessage(senderID);
+    //   return;
+    // }
 
     if (messageText.toLowerCase().indexOf("complain") > -1 || messageText.toLowerCase().indexOf("refund") > -1
           || messageText.toLowerCase().indexOf("pathetic") > -1 || messageText.toLowerCase().indexOf("frod") > -1) {
@@ -125,7 +107,7 @@ function receivedMessage(event) {
     return;
 
   } else if (messageAttachments) {
-    // echoMessage(senderID, "");
+    echoMessage(senderID, "Message with attachments received");
   }
 }
 
@@ -150,13 +132,6 @@ function callZalando(messageText, senderID) {
           var jsonResponse = JSON.parse(body);
           var articles = jsonResponse.articles;
           console.log('zalando articles received');
-          
-          var user = userMap[senderID];
-            /* client.hgetall(senderID, function(err, object) {
-              user = JSON.parse(object) ;
-            }); */
-
-          user.containsGreeting = 'false';
 
           if (!articles || typeof articles === 'undefined') {
             //this.setTimeout(function() { echoMessage(senderID, "Thanks for contacting. One of our executives will get in touch with you shortly..."); }, 4000);
@@ -164,20 +139,19 @@ function callZalando(messageText, senderID) {
             echoMessage(senderID, "Thanks for contacting. One of our executives will get in touch with you shortly...");
             return;
 
-          } else if(articles.length > 3){
+          } else if(articles.length > 5){
             var propertyArray = [];
+            var count = 0;
 
-            for (var i=0; count < 4; i++) {
-              if (i > 100) {
-                break;
-              }
+            for (var i=0; count < 6; i++) {
               if (articles[i]) {
                   var prop = new Property();
                   prop.image = "https://mosaic03.ztat.net/vgs/media/catalog-lg/" + articles[i].media[0].path;
-                  prop.name = articles[i].name.split('_').[0];
+                  prop.name = articles[i].name.split(" ", 1);
                   prop.brand_name = articles[i].brand_name;
-                  prop.price = articles[i].price.promotional;
-                  prop.shortUrl = 'https://en.zalando.de/' + articles[i].url_key;
+                  prop.price = "Price: " + articles[i].price.promotional;
+                  prop.shortUrl = 'https://en.zalando.de/' + articles[i].url_key + '.html';
+                  prop.product_group = articles[i].product_group;
                   count++;
                   propertyArray.push(prop);
               }
@@ -211,48 +185,71 @@ function sendZalandoResponseMessage(recipientId, propertyArray) {
         type: "template",
         payload: {
           template_type: "generic",
+          image_aspect_ratio: "square",
           elements: [{
             title: propertyArray[0].name + " by " + propertyArray[0].brand_name,
             subtitle: propertyArray[0].price,
-            item_url: propertyArray[0].shortUrl,
+            //item_url: propertyArray[0].shortUrl,
             image_url: propertyArray[0].image,
             buttons: [{
               type: "web_url",
               url: propertyArray[0].shortUrl,
-              title: "View Product"
+              title: "Buy Now"
             }]
           },
           {
             title: propertyArray[1].name + " by " + propertyArray[1].brand_name,
             subtitle: propertyArray[1].price,
-            item_url: propertyArray[1].shortUrl,
+            //item_url: propertyArray[1].shortUrl,
             image_url: propertyArray[1].image,
             buttons: [{
               type: "web_url",
               url: propertyArray[1].shortUrl,
-              title: "View Product"
+              title: "Buy Now"
             }]
           },
           {
             title: propertyArray[2].name + " by " + propertyArray[2].brand_name,
             subtitle: propertyArray[2].price,
-            item_url: propertyArray[2].shortUrl,
+            //item_url: propertyArray[2].shortUrl,
             image_url: propertyArray[2].image,
             buttons: [{
               type: "web_url",
               url: propertyArray[2].shortUrl,
-              title: "View Product"
+              title: "Buy Now"
             }]
           },
           {
             title: propertyArray[3].name + " by " + propertyArray[3].brand_name,
             subtitle: propertyArray[3].price,
-            item_url: propertyArray[3].shortUrl,
+            //item_url: propertyArray[3].shortUrl,
             image_url: propertyArray[3].image,
             buttons: [{
               type: "web_url",
               url: propertyArray[3].shortUrl,
-              title: "View Product"
+              title: "Buy Now"
+            }]
+          },
+          {
+            title: propertyArray[4].name + " by " + propertyArray[4].brand_name,
+            subtitle: propertyArray[4].price,
+            //item_url: propertyArray[4].shortUrl,
+            image_url: propertyArray[4].image,
+            buttons: [{
+              type: "web_url",
+              url: propertyArray[4].shortUrl,
+              title: "Buy Now"
+            }],
+          },
+          {
+            title: propertyArray[5].name + " by " + propertyArray[5].brand_name,
+            subtitle: propertyArray[5].price,
+            //item_url: propertyArray[5].shortUrl,
+            image_url: propertyArray[5].image,
+            buttons: [{
+              type: "web_url",
+              url: propertyArray[5].shortUrl,
+              title: "Buy Now"
             }]
           }]
         }
