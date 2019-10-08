@@ -163,7 +163,7 @@ function makeWitCall(messageText, senderID) {
               processWitRespone(senderID, results, user);
               // this.setTimeout(function() { echoMessage(senderID, 'Please type the location you are looking for rent/buy property: flats in powai mumbai');}, 2000);
           } else {
-              console.log('processing wit response..');
+              console.log('processing wit response..' + results);
               processWitRespone(senderID, results, user);
           }
       }
@@ -179,24 +179,28 @@ function processWitRespone(senderID, results, user) {
 
   var queryString = "";
 
-  if(results.hasOwnProperty('color')) {
+  if(results.hasOwnProperty('color') && typeof results.color  !== 'undefined') {
     user.color = results.color[0].value;
-    queryString += user.color;
+    console.log(user.color);
+    if (typeof user.color  !== 'undefined')
+      queryString += user.color;
   }
 
-  if(results.hasOwnProperty('category')) {
+  if(results.hasOwnProperty('category') && typeof results.category  !== 'undefined') {
     user.category = results.category[0].value;
-    queryString = queryString + " " + user.category;
+    if (typeof user.category  !== 'undefined')
+      queryString = queryString + " " + user.category;
   }
 
 
-  if(results.hasOwnProperty('filters')) {
+  if(results.hasOwnProperty('filters') && typeof results.filters  !== 'undefined') {
     for (var i=0; i < results.filters.length; i++) {
       user.filters = user.filters + ' ' + results.filters[i].value;
       queryString = queryString + " " + user.filters;
     }
   }
 
+  console.log("QueryString: " + queryString)
   user.queryString = user.queryString + queryString;
 
   userMap[senderID] = user;
@@ -389,7 +393,7 @@ function sendGenericMessage(recipientId) {
                       type: "template",
                       payload: {
                         template_type: "button",
-                        text: 'Hello ' + fbResponse.first_name + '.\nI am AI-assistant for Zalando.\n Type in whatever you want to buy for clothing or fashion and I\'ll try my best!',
+                        text: 'Hello ' + fbResponse.first_name + '.\nI am Zalando-AI-assistant.\nType in what you are looking for clothing or fashion and I\'ll try my best!',
                         buttons: [{
                             "type": "web_url",
                             "url": "https://en.zalando.de/",
