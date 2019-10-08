@@ -38,20 +38,23 @@ app.post('/webhook', function (request, response) {
       var timeOfEvent = pageEntry.time;
 
       // Iterate over each messaging event
-      pageEntry.messaging.forEach(function(messagingEvent) {
-        if (messagingEvent.optin) {
-          // receivedAuthentication(messagingEvent);
-        } else if (messagingEvent.message) {
-          console.log("message received...")
-          receivedMessage(messagingEvent);
-        } else if (messagingEvent.delivery) {
-          // receivedDeliveryConfirmation(messagingEvent);
-        } else if (messagingEvent.postback) {
-          receivedPostback(messagingEvent);
-        } else {
-          console.log("Webhook received unknown messagingEvent: ", messagingEvent);
-        }
-      });
+
+      if (typeof pageEntry.messaging === 'undefined') {
+        pageEntry.messaging.forEach(function(messagingEvent) {
+          if (messagingEvent.optin) {
+            // receivedAuthentication(messagingEvent);
+          } else if (messagingEvent.message) {
+            console.log("message received...")
+            receivedMessage(messagingEvent);
+          } else if (messagingEvent.delivery) {
+            // receivedDeliveryConfirmation(messagingEvent);
+          } else if (messagingEvent.postback) {
+            receivedPostback(messagingEvent);
+          } else {
+            console.log("Webhook received unknown messagingEvent: ", messagingEvent);
+          }
+        });
+      }
     });
 
     response.sendStatus(200);
@@ -59,6 +62,11 @@ app.post('/webhook', function (request, response) {
 });
 
 var PAGE_ACCESS_TOKEN = "EAAikXHKbMcEBABFDhRdVTVHrxsX3oHbjZANfE2zwwlJem71wT9RZAGnsfNw6Dti5QAOCKaU8AMjMZBog2J7l7xqaGtZCThrzpdaMVag4fOaXrrLshDDvSYbcHoRIX4LHOENQeQjEv9vg1EAujIbbtT8ffvmrMcobq2z71UuCMAZDZD";
+
+var propertyArray = [];
+
+function Property() {
+};
 
 function User(){
 }
