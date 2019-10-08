@@ -249,7 +249,7 @@ function callZalando(queryString, senderID) {
                   prop.brand_name = articles[i].brand_name;
 
                   if (articles[i].price.promotional != articles[i].price.original) {
-                    prop.price = "Price: " + articles[i].price.promotional + " was " articles[i].price.original;
+                    prop.price = "Price: " + articles[i].price.promotional + " was " + articles[i].price.original;
                   } else {
                     prop.price = "Price: " + articles[i].price.promotional;
                   }
