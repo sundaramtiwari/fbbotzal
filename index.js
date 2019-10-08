@@ -203,8 +203,10 @@ function processWitRespone(senderID, results, user) {
 
   if(results.hasOwnProperty('filters') && typeof results.filters  !== 'undefined') {
     for (var i=0; i < results.filters.length; i++) {
-      user.filters = user.filters + ' ' + results.filters[i].value;
-      queryString = queryString + " " + user.filters;
+      if (results.filters[i].value != 'undefined') {
+        user.filters = user.filters + ' ' + results.filters[i].value;
+        queryString = queryString + " " + user.filters;
+      }
     }
   }
 
