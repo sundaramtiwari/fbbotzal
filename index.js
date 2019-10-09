@@ -193,25 +193,24 @@ function processWitRespone(senderID, results, user) {
           console.log('Updating filters: ' + user.filters + ' ' + results.filters[i].value.toLowerCase());
             user.filters = user.filters + ' ' + results.filters[i].value.toLowerCase();
           }
-        else
-          user.filters = results.filters[i].value;
+        else {
+          console.log('Initializing filter: ' + results.filters[i].value.toLowerCase());
+          user.filters = results.filters[i].value.toLowerCase();
+        }
       }
     }
   }
 
-  if (typeof user.queryString === 'undefined' || user.queryString === 'undefined') {
-    console.log("User QueryString is undefined: " + user.queryString);
-    user.queryString = '';
-  }
+  user.queryString = '';
 
   if (typeof user.color  !== 'undefined' && user.color !== 'undefined')
-    user.queryString.concat(' ' + user.color);
+    user.queryString.concat(user.color + ' ');
 
   if (typeof user.category  !== 'undefined' && user.category !== 'undefined')
-    user.queryString.concat(' ' + user.category);
+    user.queryString.concat(user.category + ' ');
 
   if (typeof user.filters  !== 'undefined' && user.filters !== 'undefined')
-    user.queryString.concat(' ' + user.filters);
+    user.queryString.concat(user.filters + ' ');
 
   console.log("QueryString: " + user.queryString)
   userMap[senderID] = user;
