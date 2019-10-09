@@ -173,6 +173,19 @@ function processWitRespone(senderID, results, user) {
   console.log("Exisiting queryString: " + user.queryString);
   var queryString = "";
 
+  if(results.hasOwnProperty('category') && typeof results.category  !== 'undefined') {
+    console.log('Updating category, resets search: ' + results.category[0].value.toLowerCase());
+    user.category = results.category[0].value.toLowerCase();
+    user.color = '';
+    user.filters = '';
+    // queryString = queryString + user.category + '\xa0';
+    queryString = queryString.concat(user.category).concat(' ');
+
+  } else if (typeof user.category  !== 'undefined' && user.category !== 'undefined') {
+      //queryString = queryString + user.category + '\xa0';
+      queryString = queryString.concat(user.category).concat(' ');
+  }
+
   if(results.hasOwnProperty('color') && typeof results.color  !== 'undefined') {
     console.log('Updating color: ' + results.color[0].value.toLowerCase());
     user.color = results.color[0].value.toLowerCase();
@@ -184,18 +197,6 @@ function processWitRespone(senderID, results, user) {
       queryString = queryString.concat(user.color).concat(' ');
   }
 
-  if(results.hasOwnProperty('category') && typeof results.category  !== 'undefined') {
-    console.log('Updating category: ' + results.category[0].value.toLowerCase());
-    user.category = results.category[0].value.toLowerCase();
-    // queryString = queryString + user.category + '\xa0';
-    queryString = queryString.concat(user.category).concat(' ');
-
-  } else if (typeof user.category  !== 'undefined' && user.category !== 'undefined') {
-      //queryString = queryString + user.category + '\xa0';
-      queryString = queryString.concat(user.category).concat(' ');
-  }
-
-
   if(results.hasOwnProperty('filters') && typeof results.filters  !== 'undefined') {
     for (var i=0; i < results.filters.length; i++) {
       if (results.filters[i].value !== 'undefined') {
@@ -203,7 +204,7 @@ function processWitRespone(senderID, results, user) {
           user.filters.indexOf(results.filters[i].value) === -1 &&
           user.filters.indexOf(results.filters[i].value) === -1 ) {
           console.log('Updating filters: ' + user.filters + ' ' + results.filters[i].value.toLowerCase());
-            user.filters = user.filters + '\xa0' + results.filters[i].value.toLowerCase();
+            user.filters = user.filters.concat(' ').concat(results.filters[i].value.toLowerCase());
             // queryString = queryString + results.filters[i].value.toLowerCase() + '\xa0';
             queryString = queryString.concat(results.filters[i].value.toLowerCase()).concat(' ');
           }
