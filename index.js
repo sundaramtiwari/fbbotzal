@@ -176,13 +176,13 @@ function processWitRespone(senderID, results, user) {
   if(results.hasOwnProperty('color') && typeof results.color  !== 'undefined') {
     console.log('Updating color: ' + results.color[0].value.toLowerCase());
     user.color = results.color[0].value.toLowerCase();
-    queryString.concat(user.color + '\xa0');
+    queryString = queryString + user.color + '\xa0';
   }
 
   if(results.hasOwnProperty('category') && typeof results.category  !== 'undefined') {
     console.log('Updating category: ' + results.category[0].value.toLowerCase());
     user.category = results.category[0].value.toLowerCase();
-    queryString.concat(user.category + '\xa0');
+    queryString = queryString + user.category + '\xa0';
   }
 
 
