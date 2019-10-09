@@ -231,6 +231,7 @@ function callZalando(messageText, senderID) {
         echoMessage(senderID, "Oops! received error from zalando" + error);
       }
       else {
+          console.log('Zalando unparsed response: ' + body);
           var jsonResponse = JSON.parse(body);
           var articles = jsonResponse.articles;
           console.log('zalando articles received');
