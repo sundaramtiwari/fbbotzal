@@ -258,6 +258,7 @@ function callZalando(messageText, senderID) {
             return;
 
           } else if(articles.length > 5){
+            echoMessage(senderID, "Searching awesome stuff for you...");
             var propertyArray = [];
 
             for (var i=1; i <= 7; i++) {
