@@ -231,7 +231,6 @@ function callZalando(messageText, senderID) {
         echoMessage(senderID, "Oops! received error from zalando" + error);
       }
       else {
-          console.log('Zalando unparsed response: ' + body);
           var jsonResponse = JSON.parse(body);
           var articles = jsonResponse.articles;
           console.log('zalando articles received');
@@ -245,12 +244,7 @@ function callZalando(messageText, senderID) {
           } else if(articles.length > 5){
             var propertyArray = [];
 
-            for (var index=1; index <= 7; index++) {
-              var i;
-              if (index * 10 < articles.length)
-                i = index * 10
-              else
-                i = index;
+            for (var i=1; i <= 7; i++) {
 
               if (articles[i]) {
                   var prop = new Property();
