@@ -176,19 +176,23 @@ function processWitRespone(senderID, results, user) {
   if(results.hasOwnProperty('color') && typeof results.color  !== 'undefined') {
     console.log('Updating color: ' + results.color[0].value.toLowerCase());
     user.color = results.color[0].value.toLowerCase();
-    queryString = queryString + user.color + '\xa0';
+    // queryString = queryString + user.color + '\xa0';
+    queryString.concat(user.color).concat(' ');
 
   } else if (typeof user.color  !== 'undefined' && user.color !== 'undefined') {
-      queryString = queryString + user.color + '\xa0';
+      //queryString = queryString + user.color + '\xa0';
+      queryString.concat(user.color).concat(' ');
   }
 
   if(results.hasOwnProperty('category') && typeof results.category  !== 'undefined') {
     console.log('Updating category: ' + results.category[0].value.toLowerCase());
     user.category = results.category[0].value.toLowerCase();
-    queryString = queryString + user.category + '\xa0';
+    // queryString = queryString + user.category + '\xa0';
+    queryString.concat(user.category).concat(' ');
 
   } else if (typeof user.category  !== 'undefined' && user.category !== 'undefined') {
-      queryString = queryString + user.category + '\xa0';
+      //queryString = queryString + user.category + '\xa0';
+      queryString.concat(user.category).concat(' ');
   }
 
 
@@ -200,17 +204,20 @@ function processWitRespone(senderID, results, user) {
           user.filters.indexOf(results.filters[i].value) === -1 ) {
           console.log('Updating filters: ' + user.filters + ' ' + results.filters[i].value.toLowerCase());
             user.filters = user.filters + '\xa0' + results.filters[i].value.toLowerCase();
-            queryString = queryString + results.filters[i].value.toLowerCase() + '\xa0';
+            // queryString = queryString + results.filters[i].value.toLowerCase() + '\xa0';
+            queryString.concat(results.filters[i].value.toLowerCase()).concat(' ');
           }
         else {
           console.log('Initializing filter: ' + results.filters[i].value.toLowerCase());
           user.filters = results.filters[i].value.toLowerCase();
-          queryString = queryString + results.filters[i].value.toLowerCase() + '\xa0';
+          // queryString = queryString + results.filters[i].value.toLowerCase() + '\xa0';
+          queryString.concat(results.filters[i].value.toLowerCase()).concat(' ');
         }
       }
     }
   } else if (typeof user.filters  !== 'undefined' && user.filters !== 'undefined') {
-      queryString = queryString + user.filters + '\xa0';
+      // queryString = queryString + user.filters + '\xa0';
+      queryString.concat(user.filters).concat(' ');
   }
 
   console.log("QueryString: " + queryString)
