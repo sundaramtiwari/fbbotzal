@@ -225,7 +225,7 @@ function callZalando(messageText, senderID) {
     if (senderID === '794951570520699')
       return;
     queryString = encodeURIComponent(messageText);
-    witUrl = 'https://en.zalando.de/api/catalog/articles?sort=sale&query=' + queryString;
+    witUrl = 'https://en.zalando.de/api/catalog/articles?sort=sale&query=' + messageText;
     console.log('senderID: ' + senderID);
     console.log('Zalando URL: ' + witUrl);
 
