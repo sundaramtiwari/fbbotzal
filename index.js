@@ -193,8 +193,10 @@ function processWitRespone(senderID, results, user) {
     }
   }
 
-  if (typeof user.queryString === 'undefined' || user.queryString === 'undefined')
+  if (typeof user.queryString === 'undefined' || user.queryString === 'undefined') {
+    console.log("User QueryString is undefined: " + user.queryString);
     user.queryString = '';
+  }
 
   if (typeof user.color  !== 'undefined' && user.color !== 'undefined')
     user.queryString += ' ' + user.color
@@ -205,10 +207,11 @@ function processWitRespone(senderID, results, user) {
   if (typeof user.filters  !== 'undefined' && user.filters !== 'undefined')
     user.queryString += ' ' + user.filters
 
-  user.queryString = user.queryString.trim();
+  user.queryString = user.queryString();
 
   console.log("QueryString: " + user.queryString)
   userMap[senderID] = user;
+  console.log('Saved user queryString: ' + userMap[senderID].queryString);
 
   callZalando(user.queryString, senderID);
 }
