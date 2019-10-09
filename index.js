@@ -171,15 +171,18 @@ function makeWitCall(messageText, senderID) {
 function processWitRespone(senderID, results, user) {
 
   console.log("Exisiting queryString: " + user.queryString);
+  var queryString = "";
 
   if(results.hasOwnProperty('color') && typeof results.color  !== 'undefined') {
     console.log('Updating color: ' + results.color[0].value.toLowerCase());
     user.color = results.color[0].value.toLowerCase();
+    queryString.concat(user.color + '\xa0');
   }
 
   if(results.hasOwnProperty('category') && typeof results.category  !== 'undefined') {
     console.log('Updating category: ' + results.category[0].value.toLowerCase());
     user.category = results.category[0].value.toLowerCase();
+    queryString.concat(user.category + '\xa0');
   }
 
 
@@ -200,16 +203,8 @@ function processWitRespone(senderID, results, user) {
     }
   }
 
-  var queryString = "";
-
-  if (typeof user.color  !== 'undefined' && user.color !== 'undefined')
-    queryString.concat(user.color + '\xa0');
-
-  if (typeof user.category  !== 'undefined' && user.category !== 'undefined')
-    queryString.concat(user.category + '\xa0');
-
   if (typeof user.filters  !== 'undefined' && user.filters !== 'undefined')
-    queryString.concat(user.filters + '\xa0');
+    queryString = queryString + user.filters + '\xa0';
 
   console.log("QueryString: " + queryString)
   user.queryString = queryString;
