@@ -199,16 +199,18 @@ function processWitRespone(senderID, results, user) {
           user.filters.indexOf(results.filters[i].value) === -1 &&
           user.filters.indexOf(results.filters[i].value) === -1 ) {
           console.log('Updating filters: ' + user.filters + ' ' + results.filters[i].value.toLowerCase());
-            user.filters = user.filters + ' ' + results.filters[i].value.toLowerCase();
+            user.filters = user.filters + '\xa0' + results.filters[i].value.toLowerCase();
+            queryString = queryString + results.filters[i].value.toLowerCase() + '\xa0';
           }
         else {
           console.log('Initializing filter: ' + results.filters[i].value.toLowerCase());
           user.filters = results.filters[i].value.toLowerCase();
+          queryString = queryString + results.filters[i].value.toLowerCase() + '\xa0';
         }
       }
     }
-  } else if (typeof user.color  !== 'undefined' && user.color !== 'undefined') {
-      queryString = queryString + user.color + '\xa0';
+  } else if (typeof user.filters  !== 'undefined' && user.filters !== 'undefined') {
+      queryString = queryString + user.filters + '\xa0';
   }
 
   console.log("QueryString: " + queryString)
