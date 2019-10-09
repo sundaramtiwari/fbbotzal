@@ -89,11 +89,11 @@ function receivedMessage(event) {
   }
 
   if (!userMap.hasOwnProperty(senderID)) {
-    console.log('Adding new user to session: ' + senderID);
+    //console.log('Adding new user to session: ' + senderID);
     userMap[senderID] = new User();
 
   } else {
-    console.log('User already in session: ' + userMap[senderID]);
+    //console.log('User already in session: ' + userMap[senderID]);
   }
 
   var messageId = message.mid;
@@ -116,8 +116,8 @@ function makeWitCall(messageText, senderID) {
       return;
     queryString = encodeURIComponent(messageText);
     witUrl = 'https://api.wit.ai/message?v=20191008&q=' + queryString;
-    console.log('senderID: ' + senderID);
-    console.log('Wit URL: ' + witUrl);
+    //console.log('senderID: ' + senderID);
+    //console.log('Wit URL: ' + witUrl);
 
     var options = {
       uri: witUrl,
@@ -205,13 +205,13 @@ function processWitRespone(senderID, results, user) {
   }
 
   if (typeof user.color  !== 'undefined' && user.color !== 'undefined')
-    user.queryString += ' ' + user.color
+    user.queryString.concat(' ' + user.color);
 
   if (typeof user.category  !== 'undefined' && user.category !== 'undefined')
-    user.queryString += ' ' + user.category
+    user.queryString.concat(' ' + user.category);
 
   if (typeof user.filters  !== 'undefined' && user.filters !== 'undefined')
-    user.queryString += ' ' + user.filters
+    user.queryString.concat(' ' + user.filters);
 
   console.log("QueryString: " + user.queryString)
   userMap[senderID] = user;
