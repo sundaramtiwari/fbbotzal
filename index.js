@@ -170,6 +170,8 @@ function makeWitCall(messageText, senderID) {
 
 function processWitRespone(senderID, results, user) {
 
+  console.log("Exisiting queryString: " + user.queryString);
+
   if(results.hasOwnProperty('color') && typeof results.color  !== 'undefined') {
     user.color = results.color[0].value;
   }
@@ -183,7 +185,7 @@ function processWitRespone(senderID, results, user) {
     for (var i=0; i < results.filters.length; i++) {
       if (results.filters[i].value !== 'undefined') {
         console.log(results.filters[i].value);
-        if (user.filters && user.filters !== 'undefined')
+        if (user.filters && user.filters !== 'undefined' && !user.filters.includes(results.filters[i].value))
           user.filters = user.filters + ' ' + results.filters[i].value;
         else
           user.filters = results.filters[i].value;
@@ -203,10 +205,12 @@ function processWitRespone(senderID, results, user) {
   if (typeof user.filters  !== 'undefined' && user.filters !== 'undefined')
     user.queryString += ' ' + user.filters
 
+  user.queryString = user.queryString.trim();
+
   console.log("QueryString: " + user.queryString)
   userMap[senderID] = user;
 
-  callZalando(user.queryString.trim(), senderID);
+  callZalando(user.queryString, senderID);
 }
 
 function callZalando(messageText, senderID) {
