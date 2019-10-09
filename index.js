@@ -264,7 +264,7 @@ function callZalando(messageText, senderID) {
                   propertyArray.push(prop);
               }
             }
-            userMap[senderID] = new User();
+            // userMap[senderID] = new User();
             // client.hmset(senderID, JSON.stringify(new User()));
             sendZalandoResponseMessage(senderID, propertyArray);
             console.log('Response called');
