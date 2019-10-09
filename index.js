@@ -173,10 +173,12 @@ function processWitRespone(senderID, results, user) {
   console.log("Exisiting queryString: " + user.queryString);
 
   if(results.hasOwnProperty('color') && typeof results.color  !== 'undefined') {
+    console.log('Updating color: ' + results.color[0].value.toLowerCase());
     user.color = results.color[0].value.toLowerCase();
   }
 
   if(results.hasOwnProperty('category') && typeof results.category  !== 'undefined') {
+    console.log('Updating category: ' + results.category[0].value.toLowerCase());
     user.category = results.category[0].value.toLowerCase();
   }
 
@@ -187,8 +189,10 @@ function processWitRespone(senderID, results, user) {
         console.log(results.filters[i].value);
         if (user.filters && user.filters !== 'undefined' && 
           user.filters.indexOf(results.filters[i].value) === -1 &&
-          user.filters.indexOf(results.filters[i].value) === -1 )
+          user.filters.indexOf(results.filters[i].value) === -1 ) {
+          console.log('Updating filters: ' + user.filters + ' ' + results.filters[i].value.toLowerCase());
             user.filters = user.filters + ' ' + results.filters[i].value.toLowerCase();
+          }
         else
           user.filters = results.filters[i].value;
       }
