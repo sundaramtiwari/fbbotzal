@@ -117,7 +117,7 @@ function makeWitCall(messageText, senderID) {
     queryString = encodeURIComponent(messageText);
     witUrl = 'https://api.wit.ai/message?v=20191008&q=' + queryString;
     //console.log('senderID: ' + senderID);
-    //console.log('Wit URL: ' + witUrl);
+    console.log('Wit URL: ' + witUrl);
 
     var options = {
       uri: witUrl,
@@ -177,12 +177,18 @@ function processWitRespone(senderID, results, user) {
     console.log('Updating color: ' + results.color[0].value.toLowerCase());
     user.color = results.color[0].value.toLowerCase();
     queryString = queryString + user.color + '\xa0';
+
+  } else if (typeof user.color  !== 'undefined' && user.color !== 'undefined') {
+      queryString = queryString + user.color + '\xa0';
   }
 
   if(results.hasOwnProperty('category') && typeof results.category  !== 'undefined') {
     console.log('Updating category: ' + results.category[0].value.toLowerCase());
     user.category = results.category[0].value.toLowerCase();
     queryString = queryString + user.category + '\xa0';
+
+  } else if (typeof user.category  !== 'undefined' && user.category !== 'undefined') {
+      queryString = queryString + user.category + '\xa0';
   }
 
 
@@ -201,10 +207,9 @@ function processWitRespone(senderID, results, user) {
         }
       }
     }
+  } else if (typeof user.color  !== 'undefined' && user.color !== 'undefined') {
+      queryString = queryString + user.color + '\xa0';
   }
-
-  if (typeof user.filters  !== 'undefined' && user.filters !== 'undefined')
-    queryString = queryString + user.filters + '\xa0';
 
   console.log("QueryString: " + queryString)
   user.queryString = queryString;
