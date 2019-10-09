@@ -173,11 +173,11 @@ function processWitRespone(senderID, results, user) {
   console.log("Exisiting queryString: " + user.queryString);
 
   if(results.hasOwnProperty('color') && typeof results.color  !== 'undefined') {
-    user.color = results.color[0].value;
+    user.color = results.color[0].value.toLowerCase();
   }
 
   if(results.hasOwnProperty('category') && typeof results.category  !== 'undefined') {
-    user.category = results.category[0].value;
+    user.category = results.category[0].value.toLowerCase();
   }
 
 
@@ -185,8 +185,10 @@ function processWitRespone(senderID, results, user) {
     for (var i=0; i < results.filters.length; i++) {
       if (results.filters[i].value !== 'undefined') {
         console.log(results.filters[i].value);
-        if (user.filters && user.filters !== 'undefined' && !user.filters.includes(results.filters[i].value))
-          user.filters = user.filters + ' ' + results.filters[i].value;
+        if (user.filters && user.filters !== 'undefined' && 
+          user.filters.indexOf(results.filters[i].value) === -1 &&
+          user.filters.indexOf(results.filters[i].value) === -1 )
+            user.filters = user.filters + ' ' + results.filters[i].value.toLowerCase();
         else
           user.filters = results.filters[i].value;
       }
