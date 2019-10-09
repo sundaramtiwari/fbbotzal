@@ -207,8 +207,6 @@ function processWitRespone(senderID, results, user) {
   if (typeof user.filters  !== 'undefined' && user.filters !== 'undefined')
     user.queryString += ' ' + user.filters
 
-  user.queryString = user.queryString();
-
   console.log("QueryString: " + user.queryString)
   userMap[senderID] = user;
   console.log('Saved user queryString: ' + userMap[senderID].queryString);
