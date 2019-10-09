@@ -186,7 +186,6 @@ function processWitRespone(senderID, results, user) {
   if(results.hasOwnProperty('filters') && typeof results.filters  !== 'undefined') {
     for (var i=0; i < results.filters.length; i++) {
       if (results.filters[i].value !== 'undefined') {
-        console.log(results.filters[i].value);
         if (user.filters && user.filters !== 'undefined' && 
           user.filters.indexOf(results.filters[i].value) === -1 &&
           user.filters.indexOf(results.filters[i].value) === -1 ) {
@@ -201,18 +200,19 @@ function processWitRespone(senderID, results, user) {
     }
   }
 
-  user.queryString = '';
+  var queryString = "";
 
   if (typeof user.color  !== 'undefined' && user.color !== 'undefined')
-    user.queryString.concat(user.color + ' ');
+    queryString.concat(user.color + '\xa0');
 
   if (typeof user.category  !== 'undefined' && user.category !== 'undefined')
-    user.queryString.concat(user.category + ' ');
+    queryString.concat(user.category + '\xa0');
 
   if (typeof user.filters  !== 'undefined' && user.filters !== 'undefined')
-    user.queryString.concat(user.filters + ' ');
+    queryString.concat(user.filters + '\xa0');
 
-  console.log("QueryString: " + user.queryString)
+  console.log("QueryString: " + queryString)
+  user.queryString = queryString;
   userMap[senderID] = user;
   console.log('Saved user queryString: ' + userMap[senderID].queryString);
 
