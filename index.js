@@ -161,7 +161,7 @@ function makeWitCall(messageText, senderID) {
               // this.setTimeout(function() { echoMessage(senderID, 'Please type the location you are looking for rent/buy property: flats in powai mumbai');}, 2000);
           } else {
               console.log('processing wit response..' + results);
-              //processWitRespone(senderID, results, user);
+              processWitRespone(senderID, results, user);
           }
       }
       return;
