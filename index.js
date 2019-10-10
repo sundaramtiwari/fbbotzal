@@ -161,7 +161,7 @@ function makeWitCall(messageText, senderID) {
               // this.setTimeout(function() { echoMessage(senderID, 'Please type the location you are looking for rent/buy property: flats in powai mumbai');}, 2000);
           } else {
               console.log('processing wit response..' + results);
-              processWitRespone(senderID, results, user);
+              //processWitRespone(senderID, results, user);
           }
       }
       return;
@@ -173,17 +173,21 @@ function processWitRespone(senderID, results, user) {
   console.log("Exisiting queryString: " + user.queryString);
   var queryString = "";
 
+  var newSearch = false;
+
   if(results.hasOwnProperty('category') && typeof results.category  !== 'undefined') {
     console.log('Updating category, resets search: ' + results.category[0].value.toLowerCase());
     user.category = results.category[0].value.toLowerCase();
     user.color = '';
     user.filters = '';
+    newSearch = true;
     // queryString = queryString + user.category + '\xa0';
     queryString = queryString.concat(user.category).concat(' ');
 
   } else if (typeof user.category  !== 'undefined' && user.category !== 'undefined') {
       //queryString = queryString + user.category + '\xa0';
       queryString = queryString.concat(user.category).concat(' ');
+      newSearch = true;
   }
 
   if(results.hasOwnProperty('color') && typeof results.color  !== 'undefined') {
@@ -191,10 +195,12 @@ function processWitRespone(senderID, results, user) {
     user.color = results.color[0].value.toLowerCase();
     // queryString = queryString + user.color + '\xa0';
     queryString = queryString.concat(user.color).concat(' ');
+    newSearch = true;
 
   } else if (typeof user.color  !== 'undefined' && user.color !== 'undefined') {
       //queryString = queryString + user.color + '\xa0';
       queryString = queryString.concat(user.color).concat(' ');
+      newSearch = true;
   }
 
   if(results.hasOwnProperty('filters') && typeof results.filters  !== 'undefined') {
@@ -207,18 +213,21 @@ function processWitRespone(senderID, results, user) {
             user.filters = user.filters.concat(' ').concat(results.filters[i].value.toLowerCase());
             // queryString = queryString + results.filters[i].value.toLowerCase() + '\xa0';
             queryString = queryString.concat(results.filters[i].value.toLowerCase()).concat(' ');
+            newSearch = true;
           }
         else {
           console.log('Initializing filter: ' + results.filters[i].value.toLowerCase());
           user.filters = results.filters[i].value.toLowerCase();
           // queryString = queryString + results.filters[i].value.toLowerCase() + '\xa0';
           queryString = queryString.concat(results.filters[i].value.toLowerCase()).concat(' ');
+          newSearch = true;
         }
       }
     }
   } else if (typeof user.filters  !== 'undefined' && user.filters !== 'undefined') {
       // queryString = queryString + user.filters + '\xa0';
       queryString = queryString.concat(user.filters).concat(' ');
+      newSearch = true;
   }
 
   console.log("QueryString: " + queryString)
@@ -226,7 +235,10 @@ function processWitRespone(senderID, results, user) {
   userMap[senderID] = user;
   console.log('Saved user queryString: ' + userMap[senderID].queryString);
 
-  callZalando(user.queryString, senderID);
+  if (newSearch) {
+    console.log("Its a search query, calling zalando API");
+    callZalando(user.queryString, senderID);
+  }
 }
 
 function callZalando(messageText, senderID) {
