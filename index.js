@@ -289,7 +289,8 @@ function callZalando(messageText, senderID) {
               sendGenericMessage(senderID);
               user.containsGreeting = 'true';
               console.log('processing wit response..');
-              processWitRespone(senderID, articles, user);
+              return;
+              // processWitRespone(senderID, articles, user);
               // this.setTimeout(function() { echoMessage(senderID, 'Please type the location you are looking for rent/buy property: flats in powai mumbai');}, 2000);
           } else {
               console.log('Zalando response less that 5. Couldnt process.');
