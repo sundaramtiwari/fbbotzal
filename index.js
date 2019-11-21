@@ -25,7 +25,7 @@ app.get('/webhook/', function (request, response) {
   response.send('Error, wrong token')
 })
 
-// API endpoint
+// API endpoint.
 
 app.post('/webhook', function (request, response) {
   var data = request.body;
